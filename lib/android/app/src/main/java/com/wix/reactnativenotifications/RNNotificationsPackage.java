@@ -97,7 +97,11 @@ public class RNNotificationsPackage implements ReactPackage, AppLifecycleFacade.
             Context appContext = mApplication.getApplicationContext();
             Bundle notificationData = NotificationIntentAdapter.canHandleTrampolineActivity(appContext) ?
                     intent.getExtras() : NotificationIntentAdapter.extractPendingNotificationDataFromIntent(intent);
+            if(notificationData == null){
+                notificationData = intent.getExtras();
+            }
             final IPushNotification pushNotification = PushNotification.get(appContext, notificationData);
+            
             if (pushNotification != null) {
                 pushNotification.onOpened();
             }
